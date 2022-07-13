@@ -8,17 +8,25 @@ using namespace std;
 class Bandit
 {
     int _money;
-    int a , b , c ;
+    int a, b, c;
+    int* _bet;
 public:
-    Bandit() :_money{ 1000 }, a{ 0 },b{ 0 }, c{ 0 } {}
+
+    Bandit() :_money{ 1000 }, a{ 0 }, b{ 0 }, c{ 0 }, _bet { new int} { }
+    ~Bandit() {
+        delete _bet;
+    }
 
     void Raund();
-    void Print();
+    void game();
     void Priz();
     int getBalans() {
         if (_money < 0)
             return 0;
         return _money;
+    }
+    int getBet() {
+        return *_bet;
     }
 };
 void Bandit::Raund() {
@@ -36,32 +44,38 @@ void Bandit::Raund() {
         Sleep(200);
     }
 }
-void Bandit::Print()
+void Bandit::game()
 {
-    cout << "Деньги: " << _money << " руб\n";
-    cout << "Нaжмите Enter для вращения\n";
-        //<< "(для выхода нажми 0)\n";
-    getchar();
-    //if (n == 0) return;
+    cout << "Деньги: " << _money << " руб\n"
+        << "Ваша ставка (для выхода нажми 0): ";
+    cin >> *_bet;
+  
+    /*cout << "Нaжмите Enter для вращения\n";
+    getchar();*/
+    //if (_bet == 0) return;
 
     Raund();
     Priz();
 }
 void Bandit::Priz() {
+    int priz;
     if (a == b && b == c)
     {
-        cout << "\nВы выиграли 100 руб\n";
-        _money += 100;
+        priz = *_bet * 10;
+        cout << "\nВы выиграли "<<priz<<" руб\n";
+        _money += priz;
     }
-    else if (a == b || b == c)
+    else if (a == b || b == c||a==c)
     {
-        cout << "\nВы выиграли 30 руб\n";
-        _money += 30;
+        priz = *_bet * 3;
+        cout << "\nВы выиграли " << priz << " руб\n";
+        _money += priz;
     }
     else
     {
-        cout << "\nВы проиграли 10 руб\n";
-        _money -= 10;
+        priz = *_bet ;
+        cout << "\nВы проиграли " << priz << " руб\n";
+        _money -= priz;
     }
 }
 
@@ -73,8 +87,8 @@ int main()
     Bandit igra;
     do
     {
-       igra.Print();
-    } while (igra.getBalans());
+        igra.game();
+    } while (igra.getBalans()&&igra.getBet());
 
     cout << "\nДеньги: " << igra.getBalans() << " руб\n";
     cout << "\nДо встречи!!!\n";
