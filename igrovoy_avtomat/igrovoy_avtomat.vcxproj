@@ -127,10 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BanditBase.cpp" />
     <ClCompile Include="igrovoy_avtomat.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="igrovoy_avtomat.h" />
+    <ClInclude Include="BanditBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
